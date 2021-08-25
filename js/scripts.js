@@ -6,11 +6,8 @@ function getRandom() {
 
 function Game() {
   this.players = {};
-  this.status = true;
   this.turnCounter = 0;
   this.currentId = 0
-  // this.currentPlayer = true
-
 }
 
 Game.prototype.addPlayer = function(player) {
@@ -31,17 +28,15 @@ Game.prototype.isPlayer2Turn = function() {
   } else {
     return false
   }
-}
-// // UI 
-// // if (Game.play()) {
-//   player
-// }
+};
+
 
 function Player(name) {
   this.name = name;
-  this.total = 0;
+  this.total = 90;
   this.tempTotal = 0;
 }
+
 Player.prototype.roll = function() {
   //get number
   const diceRoll = getRandom();
@@ -54,6 +49,7 @@ Player.prototype.roll = function() {
     this.tempTotal += diceRoll;
     //test if over 100
     if ((this.total + this.tempTotal) >= 100) {
+      this.tempTotal = 0
       return "Game over. " + this.name + "wins!"
     }
   }
@@ -64,18 +60,11 @@ Player.prototype.roll = function() {
 Player.prototype.updateScore = function() {
   this.total += this.tempTotal;
   this.tempTotal = 0;
-}
+};
 
-// function changeTurns() {
-//   //updating the turns - incrementing the counter
-//   //if ...
-
-
-// http://localhost:5500
-// const newGame = new Game;
-// const player1 = new Player("bob");
-// newGame.addPlayer(player1);
-
+Player.prototype.resetScores = function() {
+  this.total = 0
+};
 
 //ui logic
 const game = new Game;
@@ -136,7 +125,11 @@ $(document).ready(function () {
       console.log(currentDiceRoll);
       //reset everything
       //display game over, play again? button
-      
+      $("#winner-display").text(currentPlayer.name);
+      $("#game-over-page").toggle();
+      $("#game-page").toggle();
+      player1.resetScores();
+      player2.resetScores();
     }
   });
   $("#hold").click(function() {
@@ -159,5 +152,17 @@ $(document).ready(function () {
     displayTurn(otherPlayer, "");
 
   });
-  // player2.roll
+  
+  $("#play-again").click(function() {
+    displayTotalScores(player1, player2);
+    game.changeTurn();
+    if (game.isPlayer2Turn()) {
+      displayTurn(player2, "");
+    } else {
+      displayTurn(player1, "");
+    }
+
+    $("#game-page").toggle();
+    $("#game-over-page").toggle();
+  });
 });
