@@ -54,19 +54,16 @@ Player.prototype.roll = function() {
     this.tempTotal += diceRoll;
     //test if over 100
     if ((this.total + this.tempTotal) >= 100) {
-      console.log("Game over. " + this.name + "wins!")
-    } else {
-      console.log("still playing");
+      return "Game over. " + this.name + "wins!"
     }
   }
   return diceRoll
 }
 
-
-
 //at end of the turn
 Player.prototype.updateScore = function() {
   this.total += this.tempTotal;
+  this.tempTotal = 0;
 }
 
 // function changeTurns() {
@@ -131,14 +128,36 @@ $(document).ready(function () {
     if (currentDiceRoll === 1) {
       game.changeTurn();
       displayTurn(otherPlayer, "");
-    } else {
+    } else if (currentDiceRoll > 1 && currentDiceRoll <= 6) {
       // check if dice roll is 1, change turn, call displayturn with other other player
       //display both player stats and dice roll
       displayTurn(currentPlayer, currentDiceRoll);
+    } else {
+      console.log(currentDiceRoll);
+      //reset everything
+      //display game over, play again? button
+      
     }
   });
   $("#hold").click(function() {
+    let currentPlayer;
+    let otherPlayer;  
+  
+    if (game.isPlayer2Turn()) {
+      currentPlayer = player2;
+      otherPlayer = player1
+    } else {
+      currentPlayer = player1;
+      otherPlayer = player2;
+    }
+    //update total
+    currentPlayer.updateScore();
+    //increment
+    game.changeTurn();
+    //update display
+    displayTotalScores(player1, player2);
+    displayTurn(otherPlayer, "");
 
-  })
+  });
   // player2.roll
 });

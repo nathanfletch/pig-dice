@@ -8,7 +8,7 @@
     <script src="js/scripts.js"></script>
   </head>
   <body>
-    <div class="container">
+    <div id="game-page" class="container">
       <!-- <form>
         <div class="form-group">
           <label for="input1">Enter a value: </label>
@@ -31,9 +31,14 @@
         <div class="col"><h4>Turn Score: <span id="turn-score-display"></span></h4></div>
       </div>
       <div id="buttons" class="row">
-      <div class="btn col-2" id="hold">Hold</div>
-      <div class="btn col-2" id="roll">Roll</div>
+      <div class="btn btn-success col-2" id="hold">Hold</div>
+      <div class="btn btn-primary col-2" id="roll">Roll</div>
       </div>
     </div>
+    <div id="game-over-page" class="container">
+      <h1>Game Over! <span id="winner-display"></span> wins!</h1>
+      <div class="btn btn-success" id="play-again">Play again?</div>
+    </div>
+    
   </body>
 </html>
