@@ -9,15 +9,30 @@
   </head>
   <body>
     <div class="container">
-      <h1>Hi</h1>
-      <form>
+      <!-- <form>
         <div class="form-group">
           <label for="input1">Enter a value: </label>
           <input type="text" id="input1" class="form-control" />
         </div>
-      </form>
-      <div id="display" class="my-3">
-        <p class="my-3">Result: <span id="display-text"></span></p>
+      </form> -->
+      <div class="row">
+        <div class="col" id="player1" >
+          <h2 class="text-center"> Player 1 </span></h2>
+          <h4>Total Score: <span id="score-1"></span></h4>
+        </div>
+        <div class="col" id="player2" >
+          <h2 class="text-center"> Player 2 </span></h2>
+          <h4>Total Score: <span id="score-2"></span></h4>
+        </div>
+      </div>
+      <div class="row">
+        <h2 id="current-player"></h2>
+        <div class="col"><h3 id="roll-display"></h3></div>
+        <div class="col"><h4>Turn Score: <span id="turn-score-display"></span></h4></div>
+      </div>
+      <div id="buttons" class="row">
+      <div class="btn col-2" id="hold">Hold</div>
+      <div class="btn col-2" id="roll">Roll</div>
       </div>
     </div>
   </body>
