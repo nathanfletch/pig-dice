@@ -50,15 +50,7 @@ Game.prototype.turnCounter{
 Game.prototype.turn(
 
 
-Wishlist:
-    game total/history
-    player names with recorded wins
-    game status (end game vs new game)
-    Dice animations and img
-    computer players
-    Background color change to indicate turn
-    Enter player names
-    incremental turn counter
+
 
     •    What key-value pairs will each object need to contain in order for the game to work?
     game{
@@ -114,6 +106,45 @@ Roll
     if 1 then  reset to 0
     else
     add val of dice to turn score
-    ~~~
-message.txt
-4 KB
+
+
+
+
+Wishlist:
+  clean up styling
+  add an opening page
+  instructions
+  enter names for p1 and p2
+  
+
+  add a computer player 2 or vs computer
+
+  game total/history
+  Dice animations and img
+  Background color change to indicate turn
+
+
+  comp:
+  setup - button (play against comp), name of player2 submit handler
+  easy setting
+  
+  display - computer turn (colors, etc)
+  called when we hold - pass to comp
+
+  pause
+  -setTimeout(2000);
+
+  announce somehow the computers actions
+  -div: the computer rolls/holds...
+  pause everytime
+  modified roll function?
+    computerRoll();
+    pause
+    computerRoll();
+    pause
+    computerHold();
+
+    player constructor comp property
+
+
+  
