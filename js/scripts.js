@@ -8,6 +8,7 @@ function Game() {
   this.players = {};
   this.turnCounter = 0;
   this.currentId = 0
+  // this.history = {}
 }
 
 Game.prototype.addPlayer = function(player) {
@@ -22,14 +23,13 @@ Game.prototype.changeTurn = function() {
 };
 
 
-Game.prototype.isPlayer2Turn = function() {
+Game.prototype.getCurrentPlayer = function() {
   if(this.turnCounter %2 === 0) {
-    return true
+    return this.players[2];
   } else {
-    return false
+    return this.players[1];
   }
 };
-
 
 function Player(name) {
   this.name = name;
@@ -38,6 +38,13 @@ function Player(name) {
 }
 
 Player.prototype.roll = function() {
+  //business logic - roll2
+  //could add a button to opening and game over screens
+  //click 
+  // const diceRoll1 = getRandom();
+  // const diceRoll2 = getRandom();
+  // if (diceRoll1 === 1 || diceRoll2 === 1) {
+
   //get number
   const diceRoll = getRandom();
   // if diceRoll is 1 then end turn
@@ -76,53 +83,54 @@ function displayTotalScores(player1, player2) {
 
 function displayTurn(player, currentDiceRoll) {
   $("#turn-score-display").text(player.tempTotal);
-  $("#current-player").text(player.name);
+  $("#current-player-display").text(player.name);
   $("#roll-display").text(currentDiceRoll);
+
+  $("#wrappity-wrap").removeClass();
+  $("#wrappity-wrap").addClass("player" + player.id);
 }
+
+
 
 $(document).ready(function () {
 //   $("form").submit(function (event) {
 //     event.preventDefault();
     // const inputName = $("#input1").val();
-  const player1 = new Player("Player1");
-  const player2 = new Player("Player2");
-  game.addPlayer(player1);
-  game.addPlayer(player2);
+    const player1 = new Player("player1");
+    const player2 = new Player("player2");
+    game.addPlayer(player1);
+    game.addPlayer(player2);
+
+  $("#player1-form").submit(function(event) {
+    event.preventDefault();
+    const player1Input = $("#player1-name-input").val();
+    player1.name = player1Input;
+    $("#player1-name-display").text(player1.name);
+  });
+
+  $("#player2-form").submit(function(event) {
+    event.preventDefault();
+    const player2Input = $("#player2-name-input").val();
+    player2.name = player2Input;
+    $("#player2-name-display").text(player2.name);
+  });
 
   displayTotalScores(player1, player2);
-  if (game.isPlayer2Turn()) {
-    console.log("player2")
-    displayTurn(player2);
-  } else {
-    console.log("player1")
-    displayTurn(player1);
-  }
+  displayTurn(game.getCurrentPlayer());
   
   $("#roll").click(function() {
-    //random
-    // const diceRoll = getRandom();
-    //
-    let currentPlayer;
-    let otherPlayer;  
-  
-    if (game.isPlayer2Turn()) {
-      currentPlayer = player2;
-      otherPlayer = player1
-    } else {
-      currentPlayer = player1;
-      otherPlayer = player2;
-    }
+    let currentPlayer = game.getCurrentPlayer()
+
     // updates temp total, checks to see if game end, returns dice roll
     let currentDiceRoll = currentPlayer.roll();
     if (currentDiceRoll === 1) {
       game.changeTurn();
-      displayTurn(otherPlayer, "");
+      displayTurn(game.getCurrentPlayer(), "");
     } else if (currentDiceRoll > 1 && currentDiceRoll <= 6) {
       // check if dice roll is 1, change turn, call displayturn with other other player
       //display both player stats and dice roll
       displayTurn(currentPlayer, currentDiceRoll);
     } else {
-      console.log(currentDiceRoll);
       //reset everything
       //display game over, play again? button
       $("#winner-display").text(currentPlayer.name);
@@ -133,36 +141,23 @@ $(document).ready(function () {
     }
   });
   $("#hold").click(function() {
-    let currentPlayer;
-    let otherPlayer;  
+    let currentPlayer = game.getCurrentPlayer();
   
-    if (game.isPlayer2Turn()) {
-      currentPlayer = player2;
-      otherPlayer = player1
-    } else {
-      currentPlayer = player1;
-      otherPlayer = player2;
-    }
     //update total
     currentPlayer.updateScore();
     //increment
     game.changeTurn();
     //update display
     displayTotalScores(player1, player2);
-    displayTurn(otherPlayer, "");
-
+    displayTurn(game.getCurrentPlayer(), "");
   });
   
   $("#play-again").click(function() {
     displayTotalScores(player1, player2);
     game.changeTurn();
-    if (game.isPlayer2Turn()) {
-      displayTurn(player2, "");
-    } else {
-      displayTurn(player1, "");
-    }
-
+    displayTurn(game.getCurrentPlayer(), "");
     $("#game-page").toggle();
     $("#game-over-page").toggle();
   });
+  
 });

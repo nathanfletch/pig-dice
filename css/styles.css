@@ -1,4 +1,42 @@
+body {
+  background-color: #E0E0E0;
+}
+
 #game-over-page {
   display: none;
+}
+
+#player1,
+#player2 {
+  border: solid 3px navy;
+  margin: 10px;
+  border-radius: 5px;
+}
+.player1 {
+  background-color: #66BB6A;
+}
+.player2 {
+  background-color: #B22222;
+}
+
+#roll-display {
+  height: 40px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+#wrappity-wrap {
+  box-sizing: border-box;
+  border: dashed navy;
+  border-spacing: 1px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+img {
+  height: 40px;
+  width: auto;
 }
 
